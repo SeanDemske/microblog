@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { DELETE_COMMENT } from "../Reducers/actionTypes";
 
 const CommentComponent = ({ comment, storyId, deleteComment }) => {
+    const dispatch = useDispatch();
+
     const handleDelete = () => {
-        deleteComment(comment.id, storyId);
+        dispatch({type: DELETE_COMMENT, storyId, commentId: comment.id});
     }
 
     return (

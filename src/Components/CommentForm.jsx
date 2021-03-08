@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { ADD_COMMENT } from "../Reducers/actionTypes";
 
-const CommentForm = ({ addComment, storyId }) => {
+const CommentForm = ({ storyId }) => {
+    const dispatch = useDispatch();
     const [inputVal, setInputVal] = useState("");
 
     const handleChange = (e) => {
@@ -9,7 +12,7 @@ const CommentForm = ({ addComment, storyId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addComment(inputVal, storyId);
+        dispatch({type: ADD_COMMENT, storyId, comment: inputVal});
     }
 
     return (

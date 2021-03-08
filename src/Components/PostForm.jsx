@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from "react-router-dom";
+import { ADD_STORY, UPDATE_STORY } from "../Reducers/actionTypes";
 
-const PostForm = ({ story = {id: uuidv4(), title: "", description: "" , body: ""}, formType="create", toggleEditState, addStory, updateStory }) => {
+const PostForm = ({ story = {id: uuidv4(), title: "", description: "" , body: ""}, formType="create", toggleEditState }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const INITIAL_STATE = story;
   const [formData, setFormData] = useState(INITIAL_STATE);
@@ -18,10 +21,10 @@ const PostForm = ({ story = {id: uuidv4(), title: "", description: "" , body: ""
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formType === "create") {
-      addStory(formData);
+      dispatch({ type: ADD_STORY, story: formData});
       history.push("/");
     } else if (formType === "edit") {
-      updateStory(formData);
+      dispatch({ type: UPDATE_STORY, formData});
       toggleEditState();
     }
   }

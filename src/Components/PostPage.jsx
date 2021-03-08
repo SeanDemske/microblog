@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
 import PostDetail from "./PostDetail";
 import PostForm from "./PostForm";
+import { DELETE_STORY } from "../Reducers/actionTypes";
 
-const PostPage = ({ stories, updateStory, deleteStory, addComment, deleteComment }) => {
+const PostPage = () => {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const { postId } = useParams();
+    const stories = useSelector(st => st);
     const currentStory = stories.filter(story => story.id === postId)[0];
     const [isEditing, setIsEditing] = useState(false);
 
@@ -12,12 +17,17 @@ const PostPage = ({ stories, updateStory, deleteStory, addComment, deleteComment
         setIsEditing(isEditing => !isEditing);
     }
 
+    const deleteStory = () => {
+        dispatch({type: DELETE_STORY, storyId: currentStory.id});
+        history.push("/");
+    }
+
     const renderPostDetail = () => {
-        return <PostDetail story={currentStory} toggleEditState={toggleEditState} addComment={addComment} deleteComment={deleteComment} />;
+        return <PostDetail story={currentStory} toggleEditState={toggleEditState} />;
     }
 
     const renderEditForm = () => {
-        return <PostForm story={currentStory} updateStory={updateStory} formType="edit" toggleEditState={toggleEditState} />
+        return <PostForm story={currentStory} formType="edit" toggleEditState={toggleEditState} />
     }
 
     return (
@@ -29,7 +39,7 @@ const PostPage = ({ stories, updateStory, deleteStory, addComment, deleteComment
                 </div>
                 <div className="PostDisplay-edit-area">
                 <i className="fas fa-edit fa-2x text-primary mx-1 i-btn" onClick={toggleEditState} />
-                <i className="fas fa-times fa-2x text-danger mx-1 i-btn" onClick={() => deleteStory(currentStory.id)}/>
+                <i className="fas fa-times fa-2x text-danger mx-1 i-btn" onClick={deleteStory}/>
                 </div>
             </div>
             {
