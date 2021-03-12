@@ -1,17 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { DELETE_COMMENT } from "../Reducers/actionTypes";
+import { removeCommentFromAPI } from "../Reducers/Actions/posts";
 
-const CommentComponent = ({ comment, storyId, deleteComment }) => {
+const CommentComponent = ({ comment, storyId }) => {
     const dispatch = useDispatch();
 
     const handleDelete = () => {
-        dispatch({type: DELETE_COMMENT, storyId, commentId: comment.id});
+        dispatch(removeCommentFromAPI(storyId, comment.id));
     }
 
     return (
         <div className="CommentComponent">
-            <p><i onClick={handleDelete} className="fa fa-times text-danger mr-2 i-btn"/> {comment.comment}</p>
+            <p><i onClick={handleDelete} className="fa fa-times text-danger mr-2 i-btn"/> {comment.text}</p>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import truncateStr from "../Utils/truncateStr";
+import VotesDisplay from "./VotesDisplay";
 import { NavLink } from "react-router-dom";
 
 const StoryCard = ({ story }) => {
@@ -9,8 +9,9 @@ const StoryCard = ({ story }) => {
                 <div className="card-body">
                     <h5 className="card-title">{story.title}</h5>
                     <h6 className="card-subtitle mb-2 text-muted">{story.description}</h6>
-                    <p className="card-text">{truncateStr(story.body, 100)}</p>
                     <NavLink to={`/${story.id}`}>Read Story</NavLink>
+                    <hr/>
+                    <VotesDisplay storyId={story.id} votes={story.votes} />
                 </div>
             </div>
         </div>

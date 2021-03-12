@@ -24,3 +24,11 @@ code {
 .i-btn:focus {
   text-decoration: underline;
 }
+
+.green {
+  color: rgb(72, 177, 62);
+}
+
+.red {
+  color: rgb(177, 62, 62);
+}

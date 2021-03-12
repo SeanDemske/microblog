@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from "react-router-dom";
-import { ADD_STORY, UPDATE_STORY } from "../Reducers/actionTypes";
+import { sendPostToAPI, updatePostFromAPI } from "../Reducers/Actions/posts";
 
 const PostForm = ({ story = {id: uuidv4(), title: "", description: "" , body: ""}, formType="create", toggleEditState }) => {
   const dispatch = useDispatch();
@@ -21,10 +21,10 @@ const PostForm = ({ story = {id: uuidv4(), title: "", description: "" , body: ""
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formType === "create") {
-      dispatch({ type: ADD_STORY, story: formData});
+      dispatch(sendPostToAPI(formData));
       history.push("/");
     } else if (formType === "edit") {
-      dispatch({ type: UPDATE_STORY, formData});
+      dispatch(updatePostFromAPI(formData));
       toggleEditState();
     }
   }
